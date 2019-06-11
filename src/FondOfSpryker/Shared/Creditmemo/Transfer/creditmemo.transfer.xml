@@ -24,6 +24,7 @@
     <transfer name="CreditmemoList">
         <property name="idCustomer" type="int" />
         <property name="customerReference" type="string" />
+        <property name="orderReference" type="string" />
         <property name="filter" type="Filter" />
         <property name="items" type="Creditmemo[]" singular="Creditmemo" />
     </transfer>
@@ -43,7 +44,7 @@
         <property name="discountAmount" type="int" />
     </transfer>
 
-    <transfer name="CreditmemmoResponse">
+    <transfer name="CreditmemoResponse">
         <property name="hasCreditmemo" type="bool" />
         <property name="creditmemoTransfer" type="Creditmemo" />
         <property name="isSuccess" type="bool" />
