@@ -4,11 +4,16 @@ namespace FondOfSpryker\Zed\Creditmemo\Business\Model\Creditmemo;
 
 use FondOfSpryker\Zed\Creditmemo\Business\Model\Creditmemo\CreditmemoHydratorInterface;
 use FondOfSpryker\Zed\Creditmemo\Persistence\CreditmemoQueryContainerInterface;
+use FondOfSpryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\CreditmemoItemTransfer;
+use Generated\Shared\Transfer\CreditmemoTotalTransfer;
 use Generated\Shared\Transfer\CreditmemoTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Creditmemo\Persistence\FosCreditmemo;
+use Orm\Zed\Creditmemo\Persistence\FosCreditmemoItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Propel\Runtime\ActiveQuery\Criteria;
 
 class CreditmemoHydrator implements CreditmemoHydratorInterface
@@ -19,14 +24,22 @@ class CreditmemoHydrator implements CreditmemoHydratorInterface
     protected $queryContainer;
 
     /**
+     * @var \FondOfSpryker\Zed\Sales\Persistence\SalesQueryContainerInterface
+     */
+    protected $salesQueryContainer;
+
+    /**
      * CreditmemoHydrator constructor.
      *
      * @param \FondOfSpryker\Zed\Creditmemo\Persistence\CreditmemoQueryContainerInterface $queryContainer
      */
     public function __construct(
-        CreditmemoQueryContainerInterface $queryContainer
+        CreditmemoQueryContainerInterface $queryContainer,
+        SalesQueryContainerInterface $salesQueryContainer
+
     ) {
         $this->queryContainer = $queryContainer;
+        $this->salesQueryContainer =$salesQueryContainer;
     }
 
     /**
@@ -48,6 +61,9 @@ class CreditmemoHydrator implements CreditmemoHydratorInterface
     {
         $creditmemoTransfer = $this->hydrateBaseCreditmemoTransfer($creditmemoEntity);
         $this->hydrateCreditmemoItemsToCreditmemoTransfer($creditmemoEntity, $creditmemoTransfer);
+        $this->hydrateShippingAddressToCreditmemoTransfer($creditmemoEntity, $creditmemoTransfer);
+        $this->hydrateBillingAddressToCreditmemoTransfer($creditmemoEntity, $creditmemoTransfer);
+        $this->hydrateTotalToCreditmemoTransfer($creditmemoEntity, $creditmemoTransfer);
 
         return $creditmemoTransfer;
     }
@@ -66,6 +82,38 @@ class CreditmemoHydrator implements CreditmemoHydratorInterface
     }
 
     /**
+     * @param \Orm\Zed\Invoice\Persistence\FosInvoice $invoiceEntity
+     * @param \Generated\Shared\Transfer\InvoiceTransfer $invoiceTransfer
+     *
+     * @throws
+     */
+    protected function hydrateBillingAddressToCreditmemoTransfer(FosCreditmemo $creditmemoEntity, CreditmemoTransfer $creditmemoTransfer): void
+    {
+        $addressEntity = $this->salesQueryContainer
+            ->querySalesOrderAddressById($creditmemoEntity->getFkSalesOrderAddressBilling())
+            ->findOne();
+        $addresTransfer = new AddressTransfer();
+        $addresTransfer->fromArray($addressEntity->toArray(), true);
+        $creditmemoTransfer->setBillingAddress($addresTransfer);
+    }
+
+    /**
+     * @param \Orm\Zed\Invoice\Persistence\FosInvoice $invoiceEntity
+     * @param \Generated\Shared\Transfer\InvoiceTransfer $invoiceTransfer
+     *
+     * @throws
+     */
+    protected function hydrateShippingAddressToCreditmemoTransfer(FosCreditmemo $creditmemoEntity, CreditmemoTransfer $creditmemoTransfer): void
+    {
+        $addressEntity =  $this->salesQueryContainer
+            ->querySalesOrderAddressById($creditmemoEntity->getFkSalesOrderAddressShipping())
+            ->findOne();
+        $addresTransfer = new AddressTransfer();
+        $addresTransfer->fromArray($addressEntity->toArray(), true);
+        $creditmemoTransfer->setShippingAddress($addresTransfer);
+    }
+
+    /**
      * @param \Orm\Zed\Creditmemo\Persistence\FosCreditmemo $creditmemoEntity
      * @param \Generated\Shared\Transfer\CreditmemoTransfer $creditmemoTransfer
      *
@@ -77,6 +125,21 @@ class CreditmemoHydrator implements CreditmemoHydratorInterface
             $itemTransfer = $this->hydrateCreditmemoItemTransfer($creditmemoItemEntity);
             $creditmemoTransfer->addCreditmemoItem($itemTransfer);
         }
+
+    }
+
+    /**
+     * @param \Orm\Zed\Creditmemo\Persistence\FosCreditmemo $creditmemoEntity
+     * @param \Generated\Shared\Transfer\CreditmemoTransfer $creditmemoTransfer
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     */
+    public function hydrateTotalToCreditmemoTransfer(FosCreditmemo $creditmemoEntity, CreditmemoTransfer $creditmemoTransfer): void
+    {
+        $totalTransfer = new CreditmemoTotalTransfer();
+        $totalTransfer->fromArray($creditmemoEntity->toArray(), true);
+
+        $creditmemoTransfer->setTotal($totalTransfer);
 
     }
 

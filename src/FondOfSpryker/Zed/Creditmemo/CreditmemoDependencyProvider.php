@@ -2,6 +2,7 @@
 
 namespace FondOfSpryker\Zed\Creditmemo;
 
+use FondOfSpryker\Zed\Creditmemo\Dependency\Facade\CreditmemoToCountryBridge;
 use FondOfSpryker\Zed\Creditmemo\Dependency\Facade\CreditmemoToLocaleBridge;
 use FondOfSpryker\Zed\Creditmemo\Dependency\Facade\CreditmemoToProductBridge;
 use FondOfSpryker\Zed\Creditmemo\Dependency\Facade\CreditmemoToSalesBridge;
@@ -93,7 +94,7 @@ class CreditmemoDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCountryFacade(Container $container): Container
     {
         $container[static::FACADE_COUNTRY] = function (Container $container) {
-            return new CreditmemoToProductBridge($container->getLocator()->country()->facade());
+            return new CreditmemoToCountryBridge($container->getLocator()->country()->facade());
         };
 
         return $container;

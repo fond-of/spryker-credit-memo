@@ -12,6 +12,20 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CreditmemoFacade extends AbstractFacade implements CreditmemoFacadeInterface
 {
+
+    /**
+     * @param \Generated\Shared\Transfer\CreditmemoTransfer $creditmemoTransfer
+     * @param array $creditmemoItemCollection
+     *
+     * @return \Generated\Shared\Transfer\CreditmemoResponseTransfer
+     */
+    public function addCreditmemo(CreditmemoTransfer $creditmemoTransfer, array $creditmemoItemCollection): CreditmemoResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCreditmemo()
+            ->add($creditmemoTransfer, $creditmemoItemCollection);
+    }
+
     /**
      * @param \Generated\Shared\Transfer\CreditmemoListTransfer $creditmemoListTransfer
      * @param string $orderReference
@@ -21,5 +35,12 @@ class CreditmemoFacade extends AbstractFacade implements CreditmemoFacadeInterfa
     public function findCreditmemosByOrderReference(CreditmemoListTransfer $creditmemoListTransfer, string $orderReference)
     {
         return $this->getFactory()->createCreditmemoReader()->findCreditmemosByOrderReference($creditmemoListTransfer, $orderReference);
+    }
+
+    public function findCreditmemoById(CreditmemoTransfer $creditmemoTransfer): CreditmemoTransfer
+    {
+        return $this->getFactory()
+            ->createCreditmemo()
+            ->findById($creditmemoTransfer);
     }
 }

@@ -9,10 +9,10 @@
         <column name="customer_reference" required="true" size="255" type="VARCHAR"/>
         <column name="fk_sales_order_address_billing" required="true" type="INTEGER" />
         <column name="fk_sales_order_address_shipping" required="true" type="INTEGER" />
-        <column name="subtotal" required="true" type="INTEGER" />
-        <column name="discount_total" required="true" type="INTEGER" />
-        <column name="grand_total" required="true" type="INTEGER" />
-        <column name="tax_total" required="true" type="INTEGER" />
+        <column name="subtotal" type="INTEGER" required="true"/>
+        <column name="discount_total" type="INTEGER" required="true"/>
+        <column name="tax_total" type="INTEGER" required="true"/>
+        <column name="grand_total" type="INTEGER" required="true"/>
         <column name="fk_locale" type="INTEGER"/>
         <column name="currency_iso_code" type="VARCHAR" size="5" required="false" />
         <column name="store" type="VARCHAR" size="255" required="false" />

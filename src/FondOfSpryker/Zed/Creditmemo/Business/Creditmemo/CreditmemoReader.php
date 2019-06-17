@@ -88,7 +88,7 @@ class CreditmemoReader implements CreditmemoReaderInterface
                 $this->localeFacade->getLocaleByIdLocale($creditmemoEntity->getFkLocale())->getLocaleName()
             );
 
-            $creditmemo->append($creditmemoTransfer);
+            $creditmemos->append($creditmemoTransfer);
         }
 
         return $creditmemos;

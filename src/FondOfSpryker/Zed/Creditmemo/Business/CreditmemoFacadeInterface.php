@@ -10,6 +10,14 @@ interface CreditmemoFacadeInterface
 {
 
     /**
+     * @param \Generated\Shared\Transfer\CreditmemoTransfer $creditmemoTransfer
+     * @param array $creditmemoItemCollection
+     * 
+     * @return \Generated\Shared\Transfer\CreditmemoResponseTransfer
+     */
+    public function addCreditmemo(CreditmemoTransfer $creditmemoTransfer, array $creditmemoItemCollection): CreditmemoResponseTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\CreditmemoListTransfer $creditmemoListTransfer
      * @param string $orderReference
      *
@@ -17,4 +25,10 @@ interface CreditmemoFacadeInterface
      */
     public function findCreditmemosByOrderReference(CreditmemoListTransfer $creditmemoListTransfer, string $orderReference);
 
+    /**
+     * @param \Generated\Shared\Transfer\CreditmemoTransfer $creditmemoTransfer
+     *
+     * @return \Generated\Shared\Transfer\CreditmemoTransfer|null
+     */
+    public function findCreditmemoById(CreditmemoTransfer $creditmemoTransfer): CreditmemoTransfer;
 }

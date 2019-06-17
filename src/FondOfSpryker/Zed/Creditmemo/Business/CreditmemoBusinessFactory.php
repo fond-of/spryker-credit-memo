@@ -2,9 +2,11 @@
 
 namespace FondOfSpryker\Zed\Creditmemo\Business;
 
+use FondOfSpryker\Zed\Creditmemo\Business\Creditmemo\Creditmemo;
 use FondOfSpryker\Zed\Creditmemo\Business\Creditmemo\CreditmemoInterface;
 use FondOfSpryker\Zed\Creditmemo\Business\Creditmemo\CreditmemoReader;
 use FondOfSpryker\Zed\Creditmemo\Business\Creditmemo\CreditmemoReaderInterface;
+use FondOfSpryker\Zed\Creditmemo\Business\Creditmemo\CreditmemoValidator;
 use FondOfSpryker\Zed\Creditmemo\Business\Model\Creditmemo\CreditmemoHydrator;
 use FondOfSpryker\Zed\Creditmemo\Business\Model\Creditmemo\CreditmemoHydratorInterface;
 use FondOfSpryker\Zed\Creditmemo\CreditmemoDependencyProvider;
@@ -55,7 +57,7 @@ class CreditmemoBusinessFactory extends AbstractBusinessFactory
      */
     protected function getLocaleQueryContainer()
     {
-        return $this->getProvidedDependency(CreditmemoDependenDependencyProvider::QUERY_CONTAINER_LOCALE);
+        return $this->getProvidedDependency(CreditmemoDependencyProvider::QUERY_CONTAINER_LOCALE);
     }
 
     /**
@@ -64,7 +66,19 @@ class CreditmemoBusinessFactory extends AbstractBusinessFactory
     public function createCreditmemoHydrator(): CreditmemoHydratorInterface
     {
         return new CreditmemoHydrator(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getSalesQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\Customer\EmailValidatorInterface
+     */
+    protected function createCreditmemoValidator()
+    {
+        return new CreditmemoValidator(
+            $this->getQueryContainer(),
+            $this->getSalesQueryContainer()
         );
     }
 
@@ -103,5 +117,13 @@ class CreditmemoBusinessFactory extends AbstractBusinessFactory
     protected function getSalesFacade()
     {
         return $this->getProvidedDependency(CreditmemoDependencyProvider::FACADE_SALES);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    protected function getStore()
+    {
+        return $this->getProvidedDependency(CreditmemoDependencyProvider::STORE);
     }
 }

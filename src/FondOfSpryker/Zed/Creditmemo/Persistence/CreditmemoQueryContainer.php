@@ -19,4 +19,16 @@ class CreditmemoQueryContainer extends AbstractQueryContainer implements Creditm
         return $this->getFactory()->createCreditmemoQuery();
     }
 
+    /**
+     * @param int $idCreditmemo
+     *
+     * @return \Orm\Zed\Creditmemo\Persistence\FosCreditmemoQuery
+     */
+    public function queryCreditmemoById(int $idCreditmemo): FosCreditmemoQuery
+    {
+        $query = $this->queryCreditmemo();
+        $query->filterByIdCreditmemo($idCreditmemo);
+
+        return $query;
+    }
 }

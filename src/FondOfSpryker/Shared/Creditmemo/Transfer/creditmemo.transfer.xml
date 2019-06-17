@@ -9,16 +9,15 @@
         <property name="fkInvoice" type="int" />
         <property name="orderReference" type="string" />
         <property name="customerReference" type="string" />
-        <property name="fkBillingAddress" type="int" />
-        <property name="fkShippingAddress" type="int" />
-        <property name="subtotal" type="int" />
-        <property name="discountTotal" type="int" />
-        <property name="grandTotal" type="int" />
-        <property name="taxTotal" type="int" />
+        <property name="billingAddress" type="Address" />
+        <property name="shippingAddress" type="Address" />
+        <property name="total" type="CreditmemoTotal" />
         <property name="locale" type="string" />
         <property name="currency" type="string" />
         <property name="store" type="string" />
         <property name="items" type="CreditmemoItem[]" singular="CreditmemoItem" />
+        <property name="createdAt" type="string" />
+        <property name="updatedAt" type="string" />
     </transfer>
 
     <transfer name="CreditmemoList">
@@ -49,6 +48,13 @@
         <property name="creditmemoTransfer" type="Creditmemo" />
         <property name="isSuccess" type="bool" />
         <property name="errors" type="CreditmemoError[]" singular="error" />
+    </transfer>
+
+    <transfer name="CreditmemoTotal">
+        <property name="subtotal" type="int" />
+        <property name="discountTotal" type="int" />
+        <property name="taxTotal" type="int" />
+        <property name="grandTotal" type="int" />
     </transfer>
 
     <transfer name="CreditmemoError">
