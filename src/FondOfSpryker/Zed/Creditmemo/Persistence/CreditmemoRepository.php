@@ -3,6 +3,7 @@
 namespace FondOfSpryker\Zed\Creditmemo\Persistence;
 
 use Generated\Shared\Transfer\CreditmemoListTransfer;
+use Orm\Zed\Creditmemo\Persistence\FosCreditmemo;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -21,6 +22,18 @@ class CreditmemoRepository extends AbstractRepository implements CreditmemoRepos
         return $this->getFactory()
             ->createCreditmemoQuery()
             ->findByOrderReference($orderReference);
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Orm\Zed\Creditmemo\Persistence\FosCreditmemo|null
+     */
+    public function findCreditmemosByIdSalesOrder(int $idSalesOrder): ?FosCreditmemo
+    {
+        return $this->getFactory()
+            ->createCreditmemoQuery()
+            ->findOneByFkSalesOrder($idSalesOrder);
     }
 
 }

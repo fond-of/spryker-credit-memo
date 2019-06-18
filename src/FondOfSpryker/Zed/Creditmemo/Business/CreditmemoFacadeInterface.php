@@ -31,4 +31,12 @@ interface CreditmemoFacadeInterface
      * @return \Generated\Shared\Transfer\CreditmemoTransfer|null
      */
     public function findCreditmemoById(CreditmemoTransfer $creditmemoTransfer): CreditmemoTransfer;
+
+    /**
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
+     *
+     * @return bool
+     */
+    public function isCreditmemoAppointed(int $idSalesOrder, int $idSalesOrderItem): bool;
 }

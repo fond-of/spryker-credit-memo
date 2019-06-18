@@ -113,6 +113,7 @@ class Creditmemo implements CreditmemoInterface
             $creditmemoEntity->setCurrencyIsoCode($creditmemoTransfer->getCurrency());
         }
 
+        $this->addIdSalesOrderToCreditmemoEntity($creditmemoEntity);
         $this->addIdSalesOrderAddressesToCreditmemoEntity($creditmemoEntity);
         $creditmemoEntity->save();
         $this->saveCreditmemoItems($creditmemoEntity, $creditmemoItemCollection);
@@ -152,6 +153,16 @@ class Creditmemo implements CreditmemoInterface
      * @param \Orm\Zed\Creditmemo\Persistence\FosCreditmemo $creditmemoEntity
      */
     protected function addIdSalesOrderAddressesToCreditmemoEntity(FosCreditmemo $creditmemoEntity): void
+    {
+        $orderTransfer = $this->salesFacade->findSalesOrderByOrderReference($creditmemoEntity->getOrderReference());
+        $creditmemoEntity->setFkSalesOrder($orderTransfer->getIdSalesOrder());
+
+    }
+
+    /**
+     * @param \Orm\Zed\Creditmemo\Persistence\FosCreditmemo $creditmemoEntity
+     */
+    protected function addIdSalesOrderToCreditmemoEntity(FosCreditmemo $creditmemoEntity): void
     {
         $orderTransfer = $this->salesFacade->findSalesOrderByOrderReference($creditmemoEntity->getOrderReference());
         $creditmemoEntity->setFkSalesOrderAddressBilling($orderTransfer->getBillingAddress()->getIdSalesOrderAddress());

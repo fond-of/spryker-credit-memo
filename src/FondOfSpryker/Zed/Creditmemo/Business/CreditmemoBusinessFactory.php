@@ -9,6 +9,8 @@ use FondOfSpryker\Zed\Creditmemo\Business\Creditmemo\CreditmemoReaderInterface;
 use FondOfSpryker\Zed\Creditmemo\Business\Creditmemo\CreditmemoValidator;
 use FondOfSpryker\Zed\Creditmemo\Business\Model\Creditmemo\CreditmemoHydrator;
 use FondOfSpryker\Zed\Creditmemo\Business\Model\Creditmemo\CreditmemoHydratorInterface;
+use FondOfSpryker\Zed\Creditmemo\Business\TransactionStatus\TransactionStatusUpdateManager;
+use FondOfSpryker\Zed\Creditmemo\Business\TransactionStatus\TransactionStatusUpdateManagerInterface;
 use FondOfSpryker\Zed\Creditmemo\CreditmemoDependencyProvider;
 use FondOfSpryker\Zed\Creditmemo\Persistence\CreditmemoEntityManager;
 use FondOfSpryker\Zed\Creditmemo\Persistence\CreditmemoEntityManagerInterface;
@@ -49,6 +51,18 @@ class CreditmemoBusinessFactory extends AbstractBusinessFactory
             $this->createCreditmemoValidator(),
             $this->getLocaleQueryContainer(),
             $this->getStore()
+        );
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\Creditmemo\Business\TransactionStatus\TransactionStatusUpdateManager
+     */
+    public function createTransactionStatusManager(): TransactionStatusUpdateManagerInterface
+    {
+        return new TransactionStatusUpdateManager(
+            $this->getQueryContainer(),
+            $this->getRepository(),
+            $this->createCreditmemoHydrator()
         );
     }
 

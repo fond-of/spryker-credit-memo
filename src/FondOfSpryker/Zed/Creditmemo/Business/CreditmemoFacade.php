@@ -37,10 +37,29 @@ class CreditmemoFacade extends AbstractFacade implements CreditmemoFacadeInterfa
         return $this->getFactory()->createCreditmemoReader()->findCreditmemosByOrderReference($creditmemoListTransfer, $orderReference);
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\CreditmemoTransfer $creditmemoTransfer
+     *
+     * @return \Generated\Shared\Transfer\CreditmemoTransfer
+     */
     public function findCreditmemoById(CreditmemoTransfer $creditmemoTransfer): CreditmemoTransfer
     {
         return $this->getFactory()
             ->createCreditmemo()
             ->findById($creditmemoTransfer);
     }
+
+    /**
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
+     *
+     * @return bool
+     */
+    public function isCreditmemoAppointed(int $idSalesOrder, int $idSalesOrderItem): bool
+    {
+        return $this->getFactory()
+            ->createTransactionStatusManager()
+            ->isCreditmemoAppointed($idSalesOrder, $idSalesOrderItem);
+    }
+
 }
