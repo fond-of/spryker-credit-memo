@@ -1,6 +1,6 @@
 {
-  "name": "fond-of-spryker/creditmemo",
-  "description": "Implement Creditmemo",
+  "name": "fond-of-spryker/credit-memo",
+  "description": "Spryker Credit Memo Module.",
   "license": "MIT",
   "authors": [
     {
