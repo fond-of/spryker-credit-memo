@@ -1,12 +1,12 @@
 <?php
 
-namespace FondOfSpryker\Zed\Creditmemo\Persistence;
+namespace FondOfSpryker\Zed\CreditMemo\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
- * @method \FondOfSpryker\Zed\Creditmemo\Persistence\CreditmemoPersistenceFactory getFactory()
+ * @method \FondOfSpryker\Zed\CreditMemo\Persistence\CreditMemoPersistenceFactory getFactory()
  */
-class CreditmemoEntityManager extends AbstractEntityManager implements CreditmemoEntityManagerInterface
+class CreditMemoEntityManager extends AbstractEntityManager implements CreditMemoEntityManagerInterface
 {
 }
