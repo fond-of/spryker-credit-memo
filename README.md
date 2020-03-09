@@ -1,10 +1,10 @@
-#Creditmemo
-[![Build Status](https://travis-ci.org/fond-of/spryker-creditmemo.svg?branch=master)](https://travis-ci.org/fond-of/spryker-creditmemo)
-[![PHP from Travis config](https://img.shields.io/travis/php-v/symfony/symfony.svg)](https://php.net/)
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://packagist.org/packages/fond-of-spryker/creditmemo)
+# Credit Memo
+[![Build Status](https://travis-ci.org/fond-of/spryker-credit-memo.svg?branch=master)](https://travis-ci.org/fond-of/spryker-credit-memo)
+[![PHP from Travis config](https://img.shields.io/travis/php-v/fond-of/spryker-credit-memo.svg)](https://php.net/)
+[![license](https://img.shields.io/github/license/fond-of/spryker-credit-memo.svg)](https://packagist.org/packages/fond-of-spryker/credit-memo)
 
 ## Installation
 
 ```
-composer require fond-of-spryker/creditmemo
+composer require fond-of-spryker/credit-memo
 ```

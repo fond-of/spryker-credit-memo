@@ -1,7 +1,7 @@
 <?php
 
-namespace FondOfSpryker\Zed\Creditmemo\Persistence;
+namespace FondOfSpryker\Zed\CreditMemo\Persistence;
 
-interface CreditmemoEntityManagerInterface
+interface CreditMemoEntityManagerInterface
 {
 }

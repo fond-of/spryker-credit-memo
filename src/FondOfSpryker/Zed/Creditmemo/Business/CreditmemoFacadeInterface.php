@@ -1,42 +1,21 @@
 <?php
 
-namespace FondOfSpryker\Zed\Creditmemo\Business;
+namespace FondOfSpryker\Zed\CreditMemo\Business;
 
-use Generated\Shared\Transfer\CreditmemoListTransfer;
 use Generated\Shared\Transfer\CreditmemoResponseTransfer;
 use Generated\Shared\Transfer\CreditmemoTransfer;
 
-interface CreditmemoFacadeInterface
+interface CreditMemoFacadeInterface
 {
-
     /**
-     * @param \Generated\Shared\Transfer\CreditmemoTransfer $creditmemoTransfer
-     * @param array $creditmemoItemCollection
-     * 
-     * @return \Generated\Shared\Transfer\CreditmemoResponseTransfer
-     */
-    public function addCreditmemo(CreditmemoTransfer $creditmemoTransfer, array $creditmemoItemCollection): CreditmemoResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CreditmemoListTransfer $creditmemoListTransfer
-     * @param string $orderReference
+     * Specification:
+     * - Creates credit memo
      *
-     * @return \Generated\Shared\Transfer\CreditmemoResponseTransfer
-     */
-    public function findCreditmemosByOrderReference(CreditmemoListTransfer $creditmemoListTransfer, string $orderReference);
-
-    /**
-     * @param \Generated\Shared\Transfer\CreditmemoTransfer $creditmemoTransfer
+     * @api
      *
-     * @return \Generated\Shared\Transfer\CreditmemoTransfer|null
-     */
-    public function findCreditmemoById(CreditmemoTransfer $creditmemoTransfer): CreditmemoTransfer;
-
-    /**
-     * @param int $idSalesOrder
-     * @param int $idSalesOrderItem
+     * @param \Generated\Shared\Transfer\CreditMemoTransfer $creditMemoTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\CreditMemoResponseTransfer
      */
-    public function isCreditmemoAppointed(int $idSalesOrder, int $idSalesOrderItem): bool;
+    public function createCreditMemo(CreditMemoTransfer $creditMemoTransfer): CreditMemoResponseTransfer;
 }

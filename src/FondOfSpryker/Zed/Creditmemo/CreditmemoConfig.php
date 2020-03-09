@@ -1,10 +1,9 @@
 <?php
 
-namespace FondOfSpryker\Zed\Creditmemo;
+namespace FondOfSpryker\Zed\CreditMemo;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
-class CreditmemoConfig extends AbstractBundleConfig
+class CreditMemoConfig extends AbstractBundleConfig
 {
-
 }
