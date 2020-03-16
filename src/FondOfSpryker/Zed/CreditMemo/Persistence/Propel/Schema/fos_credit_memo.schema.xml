@@ -43,6 +43,7 @@
 
     <table name="fos_credit_memo_item" phpName="FosCreditMemoItem" identifierQuoting="true">
         <column name="id_credit_memo_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+
         <column name="fk_credit_memo" type="INTEGER" required="true"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
 
@@ -50,12 +51,10 @@
         <column name="name" required="true" size="255" type="VARCHAR"/>
         <column name="quantity" type="INTEGER" unsigned="true" default="1" required="true"/>
 
-        <foreign-key name="fos_credit_memo_item-fk_credit_memo" foreignTable="fos_credit_memo" phpName="CreditMemo"
-                     refPhpName="Item">
+        <foreign-key name="fos_credit_memo_item-fk_credit_memo" foreignTable="fos_credit_memo">
             <reference local="fk_credit_memo" foreign="id_credit_memo"/>
         </foreign-key>
-        <foreign-key name="fos_credit_memo_item-fk_sales_order_item" foreignTable="spy_sales_order_item"
-                     phpName="OrderItem">
+        <foreign-key name="fos_credit_memo_item-fk_sales_order_item" foreignTable="spy_sales_order_item">
             <reference local="fk_sales_order_item" foreign="id_sales_order_item"/>
         </foreign-key>
 
@@ -64,6 +63,7 @@
 
     <table name="fos_credit_memo_address" phpName="FosCreditMemoAddress" identifierQuoting="true">
         <column name="id_credit_memo_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+
         <column name="fk_country" type="INTEGER" required="true"/>
         <column name="fk_region" type="INTEGER"/>
         <column name="address1" size="255" type="VARCHAR"/>
@@ -83,12 +83,10 @@
         <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr, Ms, Diverse"/>
         <column name="zip_code" size="15" type="VARCHAR" required="true"/>
 
-        <foreign-key name="fos_credit_memo_address-fk_country" foreignTable="spy_country" phpName="Country"
-                     refPhpName="Country">
+        <foreign-key name="fos_credit_memo_address-fk_country" foreignTable="spy_country">
             <reference local="fk_country" foreign="id_country"/>
         </foreign-key>
-        <foreign-key name="fos_credit_memo_address-fk_region" foreignTable="spy_region" phpName="Region"
-                     refPhpName="Region">
+        <foreign-key name="fos_credit_memo_address-fk_region" foreignTable="spy_region">
             <reference local="fk_region" foreign="id_region"/>
         </foreign-key>
 

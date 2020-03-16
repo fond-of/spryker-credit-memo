@@ -2,8 +2,7 @@
 
 namespace FondOfSpryker\Zed\CreditMemo\Persistence;
 
-use Generated\Shared\Transfer\CreditmemoListTransfer;
-use Orm\Zed\Creditmemo\Persistence\FosCreditmemo;
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -11,4 +10,25 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class CreditMemoRepository extends AbstractRepository implements CreditMemoRepositoryInterface
 {
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer|null
+     */
+    public function findCreditMemoItemByIdSalesOrderItem(int $idSalesOrderItem): ?ItemTransfer
+    {
+        $fosCreditMemoItemQuery = $this->getFactory()->createCreditMemoItemQuery();
+
+        $fosCreditMemoItem = $fosCreditMemoItemQuery->filterByFkSalesOrderItem($idSalesOrderItem)
+            ->findOne();
+
+        if ($fosCreditMemoItem === null) {
+            return null;
+        }
+
+        return $this->getFactory()->createCreditMemoItemMapper()->mapEntityToTransfer(
+            $fosCreditMemoItem,
+            new ItemTransfer()
+        );
+    }
 }

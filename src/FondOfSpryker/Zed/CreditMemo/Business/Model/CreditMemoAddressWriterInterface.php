@@ -2,17 +2,16 @@
 
 namespace FondOfSpryker\Zed\CreditMemo\Business\Model;
 
-use Generated\Shared\Transfer\CreditMemoResponseTransfer;
 use Generated\Shared\Transfer\CreditMemoTransfer;
 
-interface CreditMemoWriterInterface
+interface CreditMemoAddressWriterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CreditMemoTransfer $creditMemoTransfer
      *
-     * @return \Generated\Shared\Transfer\CreditMemoResponseTransfer
+     * @return \Generated\Shared\Transfer\CreditMemoTransfer
      */
     public function create(
         CreditMemoTransfer $creditMemoTransfer
-    ): CreditMemoResponseTransfer;
+    ): CreditMemoTransfer;
 }
