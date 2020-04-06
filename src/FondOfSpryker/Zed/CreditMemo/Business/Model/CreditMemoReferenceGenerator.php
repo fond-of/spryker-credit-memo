@@ -55,9 +55,15 @@ class CreditMemoReferenceGenerator implements CreditMemoReferenceGeneratorInterf
      */
     protected function getSequenceNumberSettingsTransfer(): SequenceNumberSettingsTransfer
     {
-        return (new SequenceNumberSettingsTransfer())
-            ->setName(CreditMemoConstants::NAME_CREDIT_MEMO_REFERENCE)
+        $sequenceNumberSettingsTransfer = (new SequenceNumberSettingsTransfer())
+            ->setName(CreditMemoConstants::REFERENCE_NAME_VALUE)
             ->setPrefix($this->getSequenceNumberPrefix());
+
+        if ($this->config->getReferenceOffset() === null) {
+            return $sequenceNumberSettingsTransfer;
+        }
+
+        return $sequenceNumberSettingsTransfer->setOffset($this->config->getReferenceOffset());
     }
 
     /**
@@ -67,8 +73,19 @@ class CreditMemoReferenceGenerator implements CreditMemoReferenceGeneratorInterf
     {
         $sequenceNumberPrefixParts = [
             $this->storeFacade->getCurrentStore()->getName(),
-            $this->config->getEnvironmentPrefix(),
         ];
+
+        $referencePrefix = $this->config->getReferencePrefix();
+
+        if ($referencePrefix !== null && $referencePrefix !== '') {
+            $sequenceNumberPrefixParts[0] = $referencePrefix;
+        }
+
+        $referenceEnvironmentPrefix = $this->config->getReferenceEnvironmentPrefix();
+
+        if ($referenceEnvironmentPrefix !== null && $referenceEnvironmentPrefix !== '') {
+            $sequenceNumberPrefixParts[] = $this->config->getReferenceEnvironmentPrefix();
+        }
 
         return sprintf(
             '%s%s',

@@ -10,6 +10,7 @@
         <column name="fk_credit_memo_address" required="true" type="INTEGER"/>
         <column name="fk_locale" type="INTEGER"/>
 
+        <column name="order_reference" required="true" size="255" type="VARCHAR"/>
         <column name="credit_memo_reference" required="true" size="255" type="VARCHAR"/>
 
         <column name="customer_reference" required="true" size="255" type="VARCHAR"/>
@@ -18,9 +19,6 @@
         <column name="last_name" required="false" size="100" type="VARCHAR"/>
         <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr, Ms, Diverse" required="false"/>
 
-        <column name="price_mode" type="ENUM" valueSet="NET_MODE, GROSS_MODE" required="false"/>
-
-        <column name="currency_iso_code" type="VARCHAR" size="5" required="false"/>
         <column name="store" type="VARCHAR" size="255" required="false"/>
 
         <foreign-key name="fos_credit_memo-fk_sales_order" foreignTable="spy_sales_order">
@@ -63,7 +61,6 @@
 
     <table name="fos_credit_memo_address" phpName="FosCreditMemoAddress" identifierQuoting="true">
         <column name="id_credit_memo_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-
         <column name="fk_country" type="INTEGER" required="true"/>
         <column name="fk_region" type="INTEGER"/>
         <column name="address1" size="255" type="VARCHAR"/>
@@ -92,5 +89,4 @@
 
         <id-method-parameter value="fos_credit_memo_address_pk_seq"/>
     </table>
-
 </database>
