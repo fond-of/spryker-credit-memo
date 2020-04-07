@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \FondOfSpryker\Zed\CreditMemo\CreditMemoConfig getConfig()
- * @method \FondOfSpryker\Zed\CreditMemo\Persistence\CreditmemoEntityManagerInterface getEntityManager()
+ * @method \FondOfSpryker\Zed\CreditMemo\Persistence\CreditMemoEntityManagerInterface getEntityManager()
  * @method \FondOfSpryker\Zed\CreditMemo\Persistence\CreditMemoRepositoryInterface getRepository()
  */
 class CreditMemoPersistenceFactory extends AbstractPersistenceFactory

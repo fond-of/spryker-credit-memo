@@ -2,8 +2,8 @@
 
 namespace FondOfSpryker\Zed\CreditMemo\Business;
 
-use Generated\Shared\Transfer\CreditmemoResponseTransfer;
-use Generated\Shared\Transfer\CreditmemoTransfer;
+use Generated\Shared\Transfer\CreditMemoResponseTransfer;
+use Generated\Shared\Transfer\CreditMemoTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -16,10 +16,10 @@ class CreditMemoFacade extends AbstractFacade implements CreditMemoFacadeInterfa
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CreditmemoTransfer $creditMemoTransfer
-     * @return \Generated\Shared\Transfer\CreditmemoResponseTransfer
+     * @param \Generated\Shared\Transfer\CreditMemoTransfer $creditMemoTransfer
+     * @return \Generated\Shared\Transfer\CreditMemoResponseTransfer
      */
-    public function createCreditMemo(CreditmemoTransfer $creditMemoTransfer): CreditMemoResponseTransfer
+    public function createCreditMemo(CreditMemoTransfer $creditMemoTransfer): CreditMemoResponseTransfer
     {
         return $this->getFactory()->createCreditMemoWriter()->create($creditMemoTransfer);
     }
@@ -29,11 +29,11 @@ class CreditMemoFacade extends AbstractFacade implements CreditMemoFacadeInterfa
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CreditmemoTransfer $creditMemoTransfer
+     * @param \Generated\Shared\Transfer\CreditMemoTransfer $creditMemoTransfer
      *
      * @return \Generated\Shared\Transfer\CreditMemoTransfer
      */
-    public function createCreditMemoAddress(CreditmemoTransfer $creditMemoTransfer): CreditMemoTransfer
+    public function createCreditMemoAddress(CreditMemoTransfer $creditMemoTransfer): CreditMemoTransfer
     {
         return $this->getFactory()->createCreditMemoAddressWriter()->create($creditMemoTransfer);
     }
@@ -43,11 +43,11 @@ class CreditMemoFacade extends AbstractFacade implements CreditMemoFacadeInterfa
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CreditmemoTransfer $creditMemoTransfer
+     * @param \Generated\Shared\Transfer\CreditMemoTransfer $creditMemoTransfer
      *
-     * @return \Generated\Shared\Transfer\CreditmemoTransfer
+     * @return \Generated\Shared\Transfer\CreditMemoTransfer
      */
-    public function createCreditMemoItems(CreditmemoTransfer $creditMemoTransfer): CreditMemoTransfer
+    public function createCreditMemoItems(CreditMemoTransfer $creditMemoTransfer): CreditMemoTransfer
     {
         return $this->getFactory()->createCreditMemoItemsWriter()->create($creditMemoTransfer);
     }

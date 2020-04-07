@@ -13,8 +13,6 @@ class CreditMemoToSequenceNumberFacadeBridge implements CreditMemoToSequenceNumb
     protected $sequenceNumberFacade;
 
     /**
-     * ShipmentDeliveryNoteToSequenceNumberFacadeBridge constructor.
-     *
      * @param \Spryker\Zed\SequenceNumber\Business\SequenceNumberFacadeInterface $sequenceNumberFacade
      */
     public function __construct(SequenceNumberFacadeInterface $sequenceNumberFacade)

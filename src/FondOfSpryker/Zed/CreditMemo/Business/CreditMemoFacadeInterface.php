@@ -2,8 +2,8 @@
 
 namespace FondOfSpryker\Zed\CreditMemo\Business;
 
-use Generated\Shared\Transfer\CreditmemoResponseTransfer;
-use Generated\Shared\Transfer\CreditmemoTransfer;
+use Generated\Shared\Transfer\CreditMemoResponseTransfer;
+use Generated\Shared\Transfer\CreditMemoTransfer;
 
 interface CreditMemoFacadeInterface
 {
@@ -21,7 +21,7 @@ interface CreditMemoFacadeInterface
 
     /**
      * Specification:
-     * - Creates shipment delivery note address
+     * - Creates credit memo address
      *
      * @api
      *
@@ -35,7 +35,7 @@ interface CreditMemoFacadeInterface
 
     /**
      * Specification:
-     * - Creates shipment delivery note items
+     * - Creates credit memo items
      *
      * @api
      *
@@ -49,7 +49,7 @@ interface CreditMemoFacadeInterface
 
     /**
      * Specification:
-     * - Creates shipment delivery note reference
+     * - Creates credit memo reference
      *
      * @api
      *
