@@ -10,6 +10,8 @@ use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 
 class CreditMemoReferenceGenerator implements CreditMemoReferenceGeneratorInterface
 {
+    protected const UNIQUE_IDENTIFIER_SEPARATOR = '-';
+
     /**
      * @var \FondOfSpryker\Zed\CreditMemo\Dependency\Facade\CreditMemoToSequenceNumberFacadeInterface
      */
@@ -101,6 +103,6 @@ class CreditMemoReferenceGenerator implements CreditMemoReferenceGeneratorInterf
      */
     protected function getUniqueIdentifierSeparator(): string
     {
-        return '-';
+        return static::UNIQUE_IDENTIFIER_SEPARATOR;
     }
 }
