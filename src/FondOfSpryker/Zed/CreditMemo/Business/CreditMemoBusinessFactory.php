@@ -75,7 +75,7 @@ class CreditMemoBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \FondOfSpryker\Zed\CreditMemoExtension\Dependency\Plugin\CreditMemoPreSavePluginInterface]|
+     * @return \FondOfSpryker\Zed\CreditMemoExtension\Dependency\Plugin\CreditMemoPreSavePluginInterface[]
      */
     protected function getCreditMemoPreSavePlugins(): array
     {
