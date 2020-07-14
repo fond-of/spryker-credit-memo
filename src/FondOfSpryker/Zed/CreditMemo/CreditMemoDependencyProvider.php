@@ -8,7 +8,6 @@ use FondOfSpryker\Zed\CreditMemo\Communication\Plugin\CreditMemoExtension\Refere
 use FondOfSpryker\Zed\CreditMemo\Communication\Plugin\CreditMemoExtension\SalesPaymentMethodTypeCreditMemoPreSavePlugin;
 use FondOfSpryker\Zed\CreditMemo\Dependency\Facade\CreditMemoToSequenceNumberFacadeBridge;
 use FondOfSpryker\Zed\CreditMemo\Dependency\Facade\CreditMemoToStoreFacadeBridge;
-use FondOfSpryker\Zed\Prepayment\Communication\Plugin\CreditMemoExtension\Processor\PrepaymentProcessorPlugin;
 use Orm\Zed\Payment\Persistence\SpySalesPaymentQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -167,9 +166,7 @@ class CreditMemoDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getCreditMemoProcessorPlugins(): array
     {
-        return [
-            new PrepaymentProcessorPlugin(),
-        ];
+        return [];
     }
 
     /**
