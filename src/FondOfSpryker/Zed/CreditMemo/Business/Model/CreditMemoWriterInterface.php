@@ -15,4 +15,13 @@ interface CreditMemoWriterInterface
     public function create(
         CreditMemoTransfer $creditMemoTransfer
     ): CreditMemoResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CreditMemoTransfer $creditMemoTransfer
+     *
+     * @return \Generated\Shared\Transfer\CreditMemoResponseTransfer
+     */
+    public function update(
+        CreditMemoTransfer $creditMemoTransfer
+    ): CreditMemoResponseTransfer;
 }

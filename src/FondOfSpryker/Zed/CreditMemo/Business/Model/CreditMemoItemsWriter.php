@@ -13,8 +13,6 @@ class CreditMemoItemsWriter implements CreditMemoItemsWriterInterface
     protected $entityManager;
 
     /**
-     * CreditMemoAddressWriter constructor.
-     *
      * @param \FondOfSpryker\Zed\CreditMemo\Persistence\CreditMemoEntityManagerInterface $entityManager
      */
     public function __construct(CreditMemoEntityManagerInterface $entityManager)

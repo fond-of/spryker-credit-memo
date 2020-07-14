@@ -8,6 +8,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \FondOfSpryker\Zed\CreditMemo\Business\CreditMemoFacade getFacade()
+ * @method \FondOfSpryker\Zed\CreditMemo\CreditMemoConfig getConfig()
  */
 class AddressCreditMemoPreSavePlugin extends AbstractPlugin implements CreditMemoPreSavePluginInterface
 {

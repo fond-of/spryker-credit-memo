@@ -8,10 +8,16 @@ use FondOfSpryker\Zed\CreditMemo\Business\Model\CreditMemoItemsWriter;
 use FondOfSpryker\Zed\CreditMemo\Business\Model\CreditMemoItemsWriterInterface;
 use FondOfSpryker\Zed\CreditMemo\Business\Model\CreditMemoPluginExecutor;
 use FondOfSpryker\Zed\CreditMemo\Business\Model\CreditMemoPluginExecutorInterface;
+use FondOfSpryker\Zed\CreditMemo\Business\Model\CreditMemoReader;
+use FondOfSpryker\Zed\CreditMemo\Business\Model\CreditMemoReaderInterface;
 use FondOfSpryker\Zed\CreditMemo\Business\Model\CreditMemoReferenceGenerator;
 use FondOfSpryker\Zed\CreditMemo\Business\Model\CreditMemoReferenceGeneratorInterface;
 use FondOfSpryker\Zed\CreditMemo\Business\Model\CreditMemoWriter;
 use FondOfSpryker\Zed\CreditMemo\Business\Model\CreditMemoWriterInterface;
+use FondOfSpryker\Zed\CreditMemo\Business\Processor\CreditMemoProcessor;
+use FondOfSpryker\Zed\CreditMemo\Business\Processor\CreditMemoProcessorInterface;
+use FondOfSpryker\Zed\CreditMemo\Business\Resolver\PaymentMethodResolver;
+use FondOfSpryker\Zed\CreditMemo\Business\Resolver\PaymentMethodResolverInterface;
 use FondOfSpryker\Zed\CreditMemo\CreditMemoDependencyProvider;
 use FondOfSpryker\Zed\CreditMemo\Dependency\Facade\CreditMemoToSequenceNumberFacadeInterface;
 use FondOfSpryker\Zed\CreditMemo\Dependency\Facade\CreditMemoToStoreFacadeInterface;
@@ -55,6 +61,14 @@ class CreditMemoBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \FondOfSpryker\Zed\CreditMemo\Business\Resolver\PaymentMethodResolverInterface
+     */
+    public function createCreditMemoPaymentResolver(): PaymentMethodResolverInterface
+    {
+        return new PaymentMethodResolver($this->getRepository());
+    }
+
+    /**
      * @return \FondOfSpryker\Zed\CreditMemo\Business\Model\CreditMemoItemsWriterInterface
      */
     public function createCreditMemoItemsWriter(): CreditMemoItemsWriterInterface
@@ -72,6 +86,34 @@ class CreditMemoBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\CreditMemo\Business\Model\CreditMemoReaderInterface
+     */
+    public function createCreditMemoReader(): CreditMemoReaderInterface
+    {
+        return new CreditMemoReader($this->getRepository());
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\CreditMemo\Business\Processor\CreditMemoProcessorInterface
+     */
+    public function createCreditMemoProcessor(): CreditMemoProcessorInterface
+    {
+        return new CreditMemoProcessor(
+            $this->getCreditMemoProcessorPlugins(),
+            $this->getRepository(),
+            $this->getStoreFacade()
+        );
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\CreditMemoExtension\Dependency\Plugin\CreditMemoProcessorPluginInterface[]
+     */
+    protected function getCreditMemoProcessorPlugins(): array
+    {
+        return $this->getProvidedDependency(CreditMemoDependencyProvider::PLUGINS_PROCESSOR);
     }
 
     /**

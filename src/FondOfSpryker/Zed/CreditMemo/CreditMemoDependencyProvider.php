@@ -5,8 +5,12 @@ namespace FondOfSpryker\Zed\CreditMemo;
 use FondOfSpryker\Zed\CreditMemo\Communication\Plugin\CreditMemoExtension\AddressCreditMemoPreSavePlugin;
 use FondOfSpryker\Zed\CreditMemo\Communication\Plugin\CreditMemoExtension\ItemsCreditMemoPostSavePlugin;
 use FondOfSpryker\Zed\CreditMemo\Communication\Plugin\CreditMemoExtension\ReferenceCreditMemoPreSavePlugin;
+use FondOfSpryker\Zed\CreditMemo\Communication\Plugin\CreditMemoExtension\SalesPaymentMethodTypeCreditMemoPreSavePlugin;
 use FondOfSpryker\Zed\CreditMemo\Dependency\Facade\CreditMemoToSequenceNumberFacadeBridge;
 use FondOfSpryker\Zed\CreditMemo\Dependency\Facade\CreditMemoToStoreFacadeBridge;
+use FondOfSpryker\Zed\Prepayment\Communication\Plugin\CreditMemoExtension\Processor\PrepaymentProcessorPlugin;
+use Orm\Zed\Payment\Persistence\SpySalesPaymentQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -20,6 +24,9 @@ class CreditMemoDependencyProvider extends AbstractBundleDependencyProvider
 
     public const PLUGINS_POST_SAVE = 'PLUGINS_POST_SAVE';
     public const PLUGINS_PRE_SAVE = 'PLUGINS_PRE_SAVE';
+    public const PLUGINS_PROCESSOR = 'PLUGINS_PROCESSOR';
+    public const QUERY_SALES_PAYMENT = 'QUERY_SALES_PAYMENT';
+    public const QUERY_SALES_ORDER = 'QUERY_SALES_ORDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -35,6 +42,20 @@ class CreditMemoDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addCreditMemoPreSavePlugins($container);
         $container = $this->addCreditMemoPostSavePlugins($container);
+        $container = $this->addCreditMemoProcessorPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $container = $this->addSpySalesPaymentQuery($container);
+        $container = $this->addSpySalesOrderQuery($container);
 
         return $container;
     }
@@ -95,6 +116,7 @@ class CreditMemoDependencyProvider extends AbstractBundleDependencyProvider
         return [
             new AddressCreditMemoPreSavePlugin(),
             new ReferenceCreditMemoPreSavePlugin(),
+            new SalesPaymentMethodTypeCreditMemoPreSavePlugin(),
         ];
     }
 
@@ -115,6 +137,22 @@ class CreditMemoDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCreditMemoProcessorPlugins(Container $container): Container
+    {
+        $self = $this;
+
+        $container[static::PLUGINS_PROCESSOR] = static function () use ($self) {
+            return $self->getCreditMemoProcessorPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \FondOfSpryker\Zed\CreditMemoExtension\Dependency\Plugin\CreditMemoPostSavePluginInterface[]
      */
     protected function getCreditMemoPostSavePlugins(): array
@@ -122,5 +160,43 @@ class CreditMemoDependencyProvider extends AbstractBundleDependencyProvider
         return [
             new ItemsCreditMemoPostSavePlugin(),
         ];
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\CreditMemoExtension\Dependency\Plugin\CreditMemoProcessorPluginInterface[]
+     */
+    protected function getCreditMemoProcessorPlugins(): array
+    {
+        return [
+            new PrepaymentProcessorPlugin(),
+        ];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function addSpySalesPaymentQuery(Container $container): Container
+    {
+        $container[static::QUERY_SALES_PAYMENT] = static function () {
+            return SpySalesPaymentQuery::create();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function addSpySalesOrderQuery(Container $container): Container
+    {
+        $container[static::QUERY_SALES_ORDER] = static function () {
+            return SpySalesOrderQuery::create();
+        };
+
+        return $container;
     }
 }

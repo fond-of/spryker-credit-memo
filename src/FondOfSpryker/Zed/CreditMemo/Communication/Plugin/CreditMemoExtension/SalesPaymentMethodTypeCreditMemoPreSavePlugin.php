@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \FondOfSpryker\Zed\CreditMemo\Business\CreditMemoFacade getFacade()
  * @method \FondOfSpryker\Zed\CreditMemo\CreditMemoConfig getConfig()
  */
-class ReferenceCreditMemoPreSavePlugin extends AbstractPlugin implements CreditMemoPreSavePluginInterface
+class SalesPaymentMethodTypeCreditMemoPreSavePlugin extends AbstractPlugin implements CreditMemoPreSavePluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CreditMemoTransfer $creditMemoTransfer
@@ -19,8 +19,6 @@ class ReferenceCreditMemoPreSavePlugin extends AbstractPlugin implements CreditM
      */
     public function preSave(CreditMemoTransfer $creditMemoTransfer): CreditMemoTransfer
     {
-        return $creditMemoTransfer->setCreditMemoReference(
-            $this->getFacade()->createCreditMemoReference()
-        );
+        return $this->getFacade()->addSalesPaymentMethodTypeToCreditMemo($creditMemoTransfer);
     }
 }

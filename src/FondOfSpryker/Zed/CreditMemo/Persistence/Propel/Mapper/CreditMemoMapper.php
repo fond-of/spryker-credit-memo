@@ -21,6 +21,10 @@ class CreditMemoMapper implements CreditMemoMapperInterface
             $creditMemoTransfer->modifiedToArray(false)
         );
 
+        if ($creditMemoTransfer->getLocale() !== null) {
+            $fosCreditMemo->setFkLocale($creditMemoTransfer->getLocale()->getIdLocale());
+        }
+
         $addressTransfer = $creditMemoTransfer->getAddress();
 
         if ($addressTransfer !== null && $addressTransfer->getIdCreditMemoAddress() !== null) {

@@ -18,6 +18,15 @@ interface CreditMemoEntityManagerInterface
     ): CreditMemoTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\CreditMemoTransfer $creditMemoTransfer
+     *
+     * @return \Generated\Shared\Transfer\CreditMemoTransfer
+     */
+    public function updateCreditMemo(
+        CreditMemoTransfer $creditMemoTransfer
+    ): CreditMemoTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer

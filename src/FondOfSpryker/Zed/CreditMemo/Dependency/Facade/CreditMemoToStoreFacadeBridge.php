@@ -13,8 +13,6 @@ class CreditMemoToStoreFacadeBridge implements CreditMemoToStoreFacadeInterface
     protected $storeFacade;
 
     /**
-     * CreditMemoToStoreFacadeBridge constructor.
-     *
      * @param \Spryker\Zed\Store\Business\StoreFacadeInterface $storeFacade
      */
     public function __construct(StoreFacadeInterface $storeFacade)

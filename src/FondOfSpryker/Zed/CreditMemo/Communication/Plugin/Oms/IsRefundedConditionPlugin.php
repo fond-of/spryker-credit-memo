@@ -9,6 +9,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 /**
  * @method \FondOfSpryker\Zed\CreditMemo\Business\CreditMemoFacade getFacade()
  * @method \FondOfSpryker\Zed\CreditMemo\Persistence\CreditMemoRepository getRepository()
+ * @method \FondOfSpryker\Zed\CreditMemo\CreditMemoConfig getConfig()
  */
 class IsRefundedConditionPlugin extends AbstractPlugin implements ConditionInterface
 {
