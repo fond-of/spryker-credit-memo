@@ -25,14 +25,6 @@ class CreditMemoMapper implements CreditMemoMapperInterface
             $fosCreditMemo->setFkLocale($creditMemoTransfer->getLocale()->getIdLocale());
         }
 
-        $addressTransfer = $creditMemoTransfer->getAddress();
-
-        if ($addressTransfer !== null && $addressTransfer->getIdCreditMemoAddress() !== null) {
-            $fosCreditMemo->setFkCreditMemoAddress(
-                $addressTransfer->getIdCreditMemoAddress()
-            );
-        }
-
         return $fosCreditMemo;
     }
 

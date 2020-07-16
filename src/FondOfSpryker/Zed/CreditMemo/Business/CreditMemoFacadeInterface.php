@@ -35,20 +35,6 @@ interface CreditMemoFacadeInterface
     public function updateCreditMemo(CreditMemoTransfer $creditMemoTransfer): CreditMemoResponseTransfer;
 
     /**
-     * Specification:
-     * - Creates credit memo address
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CreditMemoTransfer $creditMemoTransfer
-     *
-     * @return \Generated\Shared\Transfer\CreditMemoTransfer
-     */
-    public function createCreditMemoAddress(
-        CreditMemoTransfer $creditMemoTransfer
-    ): CreditMemoTransfer;
-
-    /**
      * {@inheritDoc}
      *
      * @api

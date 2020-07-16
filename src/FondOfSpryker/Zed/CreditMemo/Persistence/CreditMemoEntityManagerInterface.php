@@ -2,7 +2,6 @@
 
 namespace FondOfSpryker\Zed\CreditMemo\Persistence;
 
-use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CreditMemoTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 
@@ -25,15 +24,6 @@ interface CreditMemoEntityManagerInterface
     public function updateCreditMemo(
         CreditMemoTransfer $creditMemoTransfer
     ): CreditMemoTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
-    public function createCreditMemoAddress(
-        AddressTransfer $addressTransfer
-    ): AddressTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer

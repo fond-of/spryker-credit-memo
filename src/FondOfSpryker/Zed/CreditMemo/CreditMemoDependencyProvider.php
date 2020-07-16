@@ -2,7 +2,6 @@
 
 namespace FondOfSpryker\Zed\CreditMemo;
 
-use FondOfSpryker\Zed\CreditMemo\Communication\Plugin\CreditMemoExtension\AddressCreditMemoPreSavePlugin;
 use FondOfSpryker\Zed\CreditMemo\Communication\Plugin\CreditMemoExtension\ItemsCreditMemoPostSavePlugin;
 use FondOfSpryker\Zed\CreditMemo\Communication\Plugin\CreditMemoExtension\ReferenceCreditMemoPreSavePlugin;
 use FondOfSpryker\Zed\CreditMemo\Communication\Plugin\CreditMemoExtension\SalesPaymentMethodTypeCreditMemoPreSavePlugin;
@@ -113,7 +112,6 @@ class CreditMemoDependencyProvider extends AbstractBundleDependencyProvider
     protected function getCreditMemoPreSavePlugins(): array
     {
         return [
-            new AddressCreditMemoPreSavePlugin(),
             new ReferenceCreditMemoPreSavePlugin(),
             new SalesPaymentMethodTypeCreditMemoPreSavePlugin(),
         ];

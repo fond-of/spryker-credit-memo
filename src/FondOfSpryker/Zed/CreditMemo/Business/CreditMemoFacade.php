@@ -54,20 +54,6 @@ class CreditMemoFacade extends AbstractFacade implements CreditMemoFacadeInterfa
      *
      * @return \Generated\Shared\Transfer\CreditMemoTransfer
      */
-    public function createCreditMemoAddress(CreditMemoTransfer $creditMemoTransfer): CreditMemoTransfer
-    {
-        return $this->getFactory()->createCreditMemoAddressWriter()->create($creditMemoTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CreditMemoTransfer $creditMemoTransfer
-     *
-     * @return \Generated\Shared\Transfer\CreditMemoTransfer
-     */
     public function addSalesPaymentMethodTypeToCreditMemo(CreditMemoTransfer $creditMemoTransfer): CreditMemoTransfer
     {
         return $this->getFactory()->createCreditMemoPaymentResolver()->resolveAndAdd($creditMemoTransfer);

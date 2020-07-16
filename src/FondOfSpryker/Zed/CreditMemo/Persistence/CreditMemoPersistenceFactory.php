@@ -3,8 +3,6 @@
 namespace FondOfSpryker\Zed\CreditMemo\Persistence;
 
 use FondOfSpryker\Zed\CreditMemo\CreditMemoDependencyProvider;
-use FondOfSpryker\Zed\CreditMemo\Persistence\Propel\Mapper\CreditMemoAddressMapper;
-use FondOfSpryker\Zed\CreditMemo\Persistence\Propel\Mapper\CreditMemoAddressMapperInterface;
 use FondOfSpryker\Zed\CreditMemo\Persistence\Propel\Mapper\CreditMemoItemMapper;
 use FondOfSpryker\Zed\CreditMemo\Persistence\Propel\Mapper\CreditMemoItemMapperInterface;
 use FondOfSpryker\Zed\CreditMemo\Persistence\Propel\Mapper\CreditMemoItemStateMapper;
@@ -82,14 +80,6 @@ class CreditMemoPersistenceFactory extends AbstractPersistenceFactory
     public function createCreditMemoMapper(): CreditMemoMapperInterface
     {
         return new CreditMemoMapper();
-    }
-
-    /**
-     * @return \FondOfSpryker\Zed\CreditMemo\Persistence\Propel\Mapper\CreditMemoAddressMapperInterface
-     */
-    public function createCreditMemoAddressMapper(): CreditMemoAddressMapperInterface
-    {
-        return new CreditMemoAddressMapper();
     }
 
     /**

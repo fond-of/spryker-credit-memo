@@ -2,8 +2,6 @@
 
 namespace FondOfSpryker\Zed\CreditMemo\Business;
 
-use FondOfSpryker\Zed\CreditMemo\Business\Model\CreditMemoAddressWriter;
-use FondOfSpryker\Zed\CreditMemo\Business\Model\CreditMemoAddressWriterInterface;
 use FondOfSpryker\Zed\CreditMemo\Business\Model\CreditMemoItemsWriter;
 use FondOfSpryker\Zed\CreditMemo\Business\Model\CreditMemoItemsWriterInterface;
 use FondOfSpryker\Zed\CreditMemo\Business\Model\CreditMemoPluginExecutor;
@@ -50,14 +48,6 @@ class CreditMemoBusinessFactory extends AbstractBusinessFactory
             $this->getCreditMemoPreSavePlugins(),
             $this->getCreditMemoPostSavePlugins()
         );
-    }
-
-    /**
-     * @return \FondOfSpryker\Zed\CreditMemo\Business\Model\CreditMemoAddressWriterInterface
-     */
-    public function createCreditMemoAddressWriter(): CreditMemoAddressWriterInterface
-    {
-        return new CreditMemoAddressWriter($this->getEntityManager());
     }
 
     /**

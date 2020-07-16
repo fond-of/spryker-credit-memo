@@ -2,7 +2,6 @@
 
 namespace FondOfSpryker\Zed\CreditMemo\Persistence;
 
-use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CreditMemoCollectionTransfer;
 use Generated\Shared\Transfer\CreditMemoQueryFilterTransfer;
 use Generated\Shared\Transfer\CreditMemoTransfer;
@@ -239,24 +238,6 @@ class CreditMemoRepository extends AbstractRepository implements CreditMemoRepos
 
     /**
      * @param \Orm\Zed\CreditMemo\Persistence\FosCreditMemo $creditMemo
-     * @param \Generated\Shared\Transfer\CreditMemoTransfer $creditMemoTransfer
-     *
-     * @return void
-     */
-    protected function prepareAddressData(
-        FosCreditMemo $creditMemo,
-        CreditMemoTransfer $creditMemoTransfer
-    ): void {
-        $addressEntityData = $creditMemo->getAddress();
-
-        if ($addressEntityData !== null) {
-            $addressTransfer = (new AddressTransfer())->fromArray($addressEntityData->toArray(), true);
-            $creditMemoTransfer->setAddress($addressTransfer);
-        }
-    }
-
-    /**
-     * @param \Orm\Zed\CreditMemo\Persistence\FosCreditMemo $creditMemo
      *
      * @return \Generated\Shared\Transfer\CreditMemoTransfer
      */
@@ -266,7 +247,6 @@ class CreditMemoRepository extends AbstractRepository implements CreditMemoRepos
         $creditMemoTransfer->fromArray($creditMemo->toArray(), true);
 
         $this->prepareCreditMemoItems($creditMemo, $creditMemoTransfer);
-        $this->prepareAddressData($creditMemo, $creditMemoTransfer);
         $this->prepareSalesPaymentMethodType($creditMemo, $creditMemoTransfer);
 
         return $creditMemoTransfer;

@@ -3,13 +3,11 @@
 namespace FondOfSpryker\Zed\CreditMemo\Persistence;
 
 use Exception;
-use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CreditMemoItemStateTransfer;
 use Generated\Shared\Transfer\CreditMemoStateTransfer;
 use Generated\Shared\Transfer\CreditMemoTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Orm\Zed\CreditMemo\Persistence\FosCreditMemo;
-use Orm\Zed\CreditMemo\Persistence\FosCreditMemoAddress;
 use Orm\Zed\CreditMemo\Persistence\FosCreditMemoItem;
 use Orm\Zed\CreditMemo\Persistence\FosCreditMemoItemState;
 use Orm\Zed\CreditMemo\Persistence\FosCreditMemoState;
@@ -139,25 +137,6 @@ class CreditMemoEntityManager extends AbstractEntityManager implements CreditMem
 
         return $creditMemoSateTransfer->setIdCreditMemoState(
             $fosCreditMemoState->getIdCreditMemoState()
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
-    public function createCreditMemoAddress(
-        AddressTransfer $addressTransfer
-    ): AddressTransfer {
-        $fosCreditMemoAddress = $this->getFactory()
-            ->createCreditMemoAddressMapper()
-            ->mapTransferToEntity($addressTransfer, new FosCreditMemoAddress());
-
-        $fosCreditMemoAddress->save();
-
-        return $addressTransfer->setIdCreditMemoAddress(
-            $fosCreditMemoAddress->getIdCreditMemoAddress()
         );
     }
 

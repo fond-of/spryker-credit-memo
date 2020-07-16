@@ -14,7 +14,6 @@
         <property name="lastName" type="string" />
         <property name="firstName" type="string" />
 
-        <property name="address" type="Address" />
         <property name="items" type="Item[]"  singular="item" />
 
         <property name="customer" type="Customer" />
@@ -44,10 +43,6 @@
         <property name="fkCreditMemo" type="int" />
         <property name="fkSalesOrderItem" type="int" />
         <property name="refunded" type="bool" />
-    </transfer>
-
-    <transfer name="Address">
-        <property name="idCreditMemoAddress" type="int" />
     </transfer>
 
     <transfer name="CreditMemoResponse">
