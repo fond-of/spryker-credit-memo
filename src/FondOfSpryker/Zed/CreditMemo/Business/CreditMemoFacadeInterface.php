@@ -46,6 +46,17 @@ interface CreditMemoFacadeInterface
     public function addSalesPaymentMethodTypeToCreditMemo(CreditMemoTransfer $creditMemoTransfer): CreditMemoTransfer;
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CreditMemoTransfer $creditMemoTransfer
+     *
+     * @return \Generated\Shared\Transfer\CreditMemoTransfer
+     */
+    public function addLocaleToCreditMemo(CreditMemoTransfer $creditMemoTransfer): CreditMemoTransfer;
+
+    /**
      * Specification:
      * - Creates credit memo items
      *

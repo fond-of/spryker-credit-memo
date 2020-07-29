@@ -7,7 +7,7 @@ use FondOfSpryker\Zed\CreditMemo\Persistence\CreditMemoRepositoryInterface;
 use Generated\Shared\Transfer\CreditMemoTransfer;
 use Generated\Shared\Transfer\SalesPaymentMethodTypeTransfer;
 
-class PaymentMethodResolver implements PaymentMethodResolverInterface
+class PaymentMethodResolver implements ResolverInterface
 {
     /**
      * @var \FondOfSpryker\Zed\CreditMemo\Persistence\CreditMemoRepositoryInterface

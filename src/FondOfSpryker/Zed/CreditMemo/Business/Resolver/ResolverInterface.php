@@ -4,7 +4,7 @@ namespace FondOfSpryker\Zed\CreditMemo\Business\Resolver;
 
 use Generated\Shared\Transfer\CreditMemoTransfer;
 
-interface PaymentMethodResolverInterface
+interface ResolverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CreditMemoTransfer $creditMemoTransfer

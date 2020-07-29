@@ -68,6 +68,20 @@ class CreditMemoFacade extends AbstractFacade implements CreditMemoFacadeInterfa
      *
      * @return \Generated\Shared\Transfer\CreditMemoTransfer
      */
+    public function addLocaleToCreditMemo(CreditMemoTransfer $creditMemoTransfer): CreditMemoTransfer
+    {
+        return $this->getFactory()->createCreditMemoLocaleResolver()->resolveAndAdd($creditMemoTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CreditMemoTransfer $creditMemoTransfer
+     *
+     * @return \Generated\Shared\Transfer\CreditMemoTransfer
+     */
     public function createCreditMemoItems(CreditMemoTransfer $creditMemoTransfer): CreditMemoTransfer
     {
         return $this->getFactory()->createCreditMemoItemsWriter()->create($creditMemoTransfer);

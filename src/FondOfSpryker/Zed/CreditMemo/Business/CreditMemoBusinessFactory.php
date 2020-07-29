@@ -14,9 +14,11 @@ use FondOfSpryker\Zed\CreditMemo\Business\Model\CreditMemoWriter;
 use FondOfSpryker\Zed\CreditMemo\Business\Model\CreditMemoWriterInterface;
 use FondOfSpryker\Zed\CreditMemo\Business\Processor\CreditMemoProcessor;
 use FondOfSpryker\Zed\CreditMemo\Business\Processor\CreditMemoProcessorInterface;
+use FondOfSpryker\Zed\CreditMemo\Business\Resolver\LocaleResolver;
 use FondOfSpryker\Zed\CreditMemo\Business\Resolver\PaymentMethodResolver;
-use FondOfSpryker\Zed\CreditMemo\Business\Resolver\PaymentMethodResolverInterface;
+use FondOfSpryker\Zed\CreditMemo\Business\Resolver\ResolverInterface;
 use FondOfSpryker\Zed\CreditMemo\CreditMemoDependencyProvider;
+use FondOfSpryker\Zed\CreditMemo\Dependency\Facade\CreditMemoToLocaleFacadeInterface;
 use FondOfSpryker\Zed\CreditMemo\Dependency\Facade\CreditMemoToSequenceNumberFacadeInterface;
 use FondOfSpryker\Zed\CreditMemo\Dependency\Facade\CreditMemoToStoreFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -51,11 +53,19 @@ class CreditMemoBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \FondOfSpryker\Zed\CreditMemo\Business\Resolver\PaymentMethodResolverInterface
+     * @return \FondOfSpryker\Zed\CreditMemo\Business\Resolver\ResolverInterface
      */
-    public function createCreditMemoPaymentResolver(): PaymentMethodResolverInterface
+    public function createCreditMemoPaymentResolver(): ResolverInterface
     {
         return new PaymentMethodResolver($this->getRepository());
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\CreditMemo\Business\Resolver\ResolverInterface
+     */
+    public function createCreditMemoLocaleResolver(): ResolverInterface
+    {
+        return new LocaleResolver($this->getLocaleFacade());
     }
 
     /**
@@ -136,5 +146,13 @@ class CreditMemoBusinessFactory extends AbstractBusinessFactory
     protected function getStoreFacade(): CreditMemoToStoreFacadeInterface
     {
         return $this->getProvidedDependency(CreditMemoDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\CreditMemo\Dependency\Facade\CreditMemoToLocaleFacadeInterface
+     */
+    protected function getLocaleFacade(): CreditMemoToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(CreditMemoDependencyProvider::FACADE_LOCALE);
     }
 }
