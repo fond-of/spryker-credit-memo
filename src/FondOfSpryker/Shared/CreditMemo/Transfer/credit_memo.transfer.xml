@@ -8,6 +8,7 @@
         <property name="fkSalesPaymentMethodType" type="int" />
         <property name="orderReference" type="string" />
         <property name="creditMemoReference" type="string" />
+        <property name="externalReference" type="string" />
 
         <property name="email" type="string" />
         <property name="salutation" type="string" />
@@ -28,12 +29,18 @@
         <property name="processedAt" type="string" />
         <property name="inProgress" type="bool" />
         <property name="refundedAmount" type="int" />
+        <property name="refundedTaxAmount" type="int" />
+        <property name="chargeAmount" type="int" />
+        <property name="chargeTaxAmount" type="int" />
+        <property name="totalAmount" type="int" />
+        <property name="totalTaxAmount" type="int" />
         <property name="wasRefundSuccessful" type="bool" />
         <property name="state" type="int" />
         <property name="errorMessage" type="string" />
         <property name="errorCode" type="int" />
         <property name="transactionId" type="string" />
         <property name="jellyfishExportState" type="string" />
+        <property name="taxIncluded" type="bool" />
 
         <property name="createdAt" type="string" />
         <property name="updatedAt" type="string" />
