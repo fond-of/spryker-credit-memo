@@ -10,6 +10,7 @@ use FondOfSpryker\Zed\CreditMemo\Dependency\Facade\CreditMemoToLocaleFacadeBridg
 use FondOfSpryker\Zed\CreditMemo\Dependency\Facade\CreditMemoToSequenceNumberFacadeBridge;
 use FondOfSpryker\Zed\CreditMemo\Dependency\Facade\CreditMemoToStoreFacadeBridge;
 use Orm\Zed\Payment\Persistence\SpySalesPaymentQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -28,6 +29,7 @@ class CreditMemoDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_PROCESSOR = 'PLUGINS_PROCESSOR';
     public const QUERY_SALES_PAYMENT = 'QUERY_SALES_PAYMENT';
     public const QUERY_SALES_ORDER = 'QUERY_SALES_ORDER';
+    public const QUERY_SALES_ORDER_ITEM = 'QUERY_SALES_ORDER_ITEM';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -58,6 +60,7 @@ class CreditMemoDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addSpySalesPaymentQuery($container);
         $container = $this->addSpySalesOrderQuery($container);
+        $container = $this->addSpySalesOrderItemQuery($container);
 
         return $container;
     }
@@ -211,6 +214,20 @@ class CreditMemoDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::QUERY_SALES_ORDER] = static function () {
             return SpySalesOrderQuery::create();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function addSpySalesOrderItemQuery(Container $container): Container
+    {
+        $container[static::QUERY_SALES_ORDER_ITEM] = static function () {
+            return SpySalesOrderItemQuery::create();
         };
 
         return $container;

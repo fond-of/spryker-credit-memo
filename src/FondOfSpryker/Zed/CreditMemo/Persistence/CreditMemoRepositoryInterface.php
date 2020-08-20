@@ -3,11 +3,13 @@
 namespace FondOfSpryker\Zed\CreditMemo\Persistence;
 
 use Generated\Shared\Transfer\CreditMemoCollectionTransfer;
+use Generated\Shared\Transfer\CreditMemoTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\SalesPaymentMethodTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\CreditMemo\Persistence\FosCreditMemo;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Propel\Runtime\Collection\ObjectCollection;
 
 interface CreditMemoRepositoryInterface
 {
@@ -19,6 +21,8 @@ interface CreditMemoRepositoryInterface
     public function findCreditMemoItemByIdSalesOrderItem(int $idSalesOrderItem): ?ItemTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
      * @return \Generated\Shared\Transfer\CreditMemoCollectionTransfer|null
      */
     public function findUnprocessedCreditMemoByStore(StoreTransfer $storeTransfer): ?CreditMemoCollectionTransfer;
@@ -61,4 +65,11 @@ interface CreditMemoRepositoryInterface
      * @return \Generated\Shared\Transfer\SalesPaymentMethodTypeTransfer|null
      */
     public function getSalesPaymentMethodType(int $idSalesOrder): ?SalesPaymentMethodTypeTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CreditMemoTransfer $creditMemoTransfer
+     *
+     * @return \Propel\Runtime\Collection\ObjectCollection|null
+     */
+    public function getSalesOrderItemsByCreditMemo(CreditMemoTransfer $creditMemoTransfer): ?ObjectCollection;
 }

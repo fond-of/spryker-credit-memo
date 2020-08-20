@@ -8,6 +8,7 @@ use Generated\Shared\Transfer\CreditMemoTransfer;
 use Orm\Zed\CreditMemo\Persistence\FosCreditMemo;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -158,5 +159,15 @@ class CreditMemoFacade extends AbstractFacade implements CreditMemoFacadeInterfa
     public function getCreditMemosBySalesOrderItems(array $spySalesOrderItems): array
     {
         return $this->getFactory()->createCreditMemoReader()->getCreditMemoBySalesOrderItems($spySalesOrderItems);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CreditMemoTransfer $creditMemoTransfer
+     *
+     * @return \Propel\Runtime\Collection\ObjectCollection|null
+     */
+    public function getSalesOrderItemsByCreditMemo(CreditMemoTransfer $creditMemoTransfer): ?ObjectCollection
+    {
+        return $this->getRepository()->getSalesOrderItemsByCreditMemo($creditMemoTransfer);
     }
 }

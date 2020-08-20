@@ -8,6 +8,7 @@ use Generated\Shared\Transfer\CreditMemoTransfer;
 use Orm\Zed\CreditMemo\Persistence\FosCreditMemo;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Propel\Runtime\Collection\ObjectCollection;
 
 interface CreditMemoFacadeInterface
 {
@@ -117,4 +118,11 @@ interface CreditMemoFacadeInterface
      * @return \Orm\Zed\CreditMemo\Persistence\FosCreditMemo[]
      */
     public function getCreditMemosBySalesOrderItems(array $spySalesOrderItems): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\CreditMemoTransfer $creditMemoTransfer
+     *
+     * @return \Propel\Runtime\Collection\ObjectCollection|null
+     */
+    public function getSalesOrderItemsByCreditMemo(CreditMemoTransfer $creditMemoTransfer): ?ObjectCollection;
 }
