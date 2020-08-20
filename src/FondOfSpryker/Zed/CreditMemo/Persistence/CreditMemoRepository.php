@@ -12,6 +12,7 @@ use Orm\Zed\CreditMemo\Persistence\FosCreditMemo;
 use Orm\Zed\CreditMemo\Persistence\FosCreditMemoQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -42,6 +43,8 @@ class CreditMemoRepository extends AbstractRepository implements CreditMemoRepos
     }
 
     /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
      * @return \Generated\Shared\Transfer\CreditMemoCollectionTransfer|null
      */
     public function findUnprocessedCreditMemoByStore(StoreTransfer $storeTransfer): ?CreditMemoCollectionTransfer
@@ -147,6 +150,27 @@ class CreditMemoRepository extends AbstractRepository implements CreditMemoRepos
     /**
      * @param \Generated\Shared\Transfer\CreditMemoTransfer $creditMemoTransfer
      *
+     * @return \Propel\Runtime\Collection\ObjectCollection|null
+     */
+    public function getSalesOrderItemsByCreditMemo(CreditMemoTransfer $creditMemoTransfer): ?ObjectCollection
+    {
+        $itemIds = [];
+        foreach ($creditMemoTransfer->getItems() as $itemTransfer) {
+            $itemIds[] = $itemTransfer->getFkSalesOrderItem();
+        }
+
+        $salesOrderItems = $this->getFactory()->getSpySalesOrderItemQuery()->filterByIdSalesOrderItem_In($itemIds)->find();
+
+        if ($salesOrderItems === null) {
+            return null;
+        }
+
+        return $salesOrderItems;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CreditMemoTransfer $creditMemoTransfer
+     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder|null
      */
     public function getSalesOrderByCreditMemo(CreditMemoTransfer $creditMemoTransfer): ?SpySalesOrder
@@ -166,6 +190,7 @@ class CreditMemoRepository extends AbstractRepository implements CreditMemoRepos
         $fosCreditMemoQuery = $this->getFactory()->createCreditMemoQuery();
 
         $fosCreditMemoQuery->filterByProcessed(false);
+        $fosCreditMemoQuery->filterByInProgress(false);
 
         if ($filterTransfer->getStoreName() !== null) {
             $fosCreditMemoQuery->filterByStore($filterTransfer->getStoreName());
@@ -179,16 +204,16 @@ class CreditMemoRepository extends AbstractRepository implements CreditMemoRepos
     }
 
     /**
-     * @param $fosCreditMemos
+     * @param \Propel\Runtime\Collection\ObjectCollection $fosCreditMemoCollection
      *
      * @return \Generated\Shared\Transfer\CreditMemoCollectionTransfer
      */
-    protected function prepareCreditMemoData($fosCreditMemos): CreditMemoCollectionTransfer
+    protected function prepareCreditMemoData(ObjectCollection $fosCreditMemoCollection): CreditMemoCollectionTransfer
     {
         $collection = new CreditMemoCollectionTransfer();
 
         /** @var \Orm\Zed\CreditMemo\Persistence\FosCreditMemo $creditMemo */
-        foreach ($fosCreditMemos->getData() as $creditMemo) {
+        foreach ($fosCreditMemoCollection->getData() as $creditMemo) {
             $collection->addCreditMemo($this->prepareCreditMemo($creditMemo));
         }
 

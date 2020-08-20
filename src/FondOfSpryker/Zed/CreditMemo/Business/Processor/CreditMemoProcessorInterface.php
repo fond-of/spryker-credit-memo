@@ -31,14 +31,14 @@ interface CreditMemoProcessorInterface
     /**
      * @param \FondOfSpryker\Zed\CreditMemoExtension\Dependency\Plugin\CreditMemoProcessorPluginInterface[] $processor
      *
-     * @return \FondOfSpryker\Zed\CreditMemo\Business\Processor\CreditMemoProcessorInterface
+     * @return $this
      */
     public function setProcessor(array $processor): self;
 
     /**
      * @param \FondOfSpryker\Zed\CreditMemoExtension\Dependency\Plugin\CreditMemoProcessorPluginInterface $processorPlugin
      *
-     * @return \FondOfSpryker\Zed\CreditMemo\Business\Processor\CreditMemoProcessorInterface
+     * @return $this
      */
     public function addProcessor(CreditMemoProcessorPluginInterface $processorPlugin): self;
 

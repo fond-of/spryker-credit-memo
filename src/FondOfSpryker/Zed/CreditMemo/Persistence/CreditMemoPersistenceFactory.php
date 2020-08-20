@@ -16,6 +16,7 @@ use Orm\Zed\CreditMemo\Persistence\FosCreditMemoItemStateQuery;
 use Orm\Zed\CreditMemo\Persistence\FosCreditMemoQuery;
 use Orm\Zed\CreditMemo\Persistence\FosCreditMemoStateQuery;
 use Orm\Zed\Payment\Persistence\SpySalesPaymentQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -72,6 +73,14 @@ class CreditMemoPersistenceFactory extends AbstractPersistenceFactory
     public function getSpySalesOrderQuery(): SpySalesOrderQuery
     {
         return $this->getProvidedDependency(CreditMemoDependencyProvider::QUERY_SALES_ORDER);
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function getSpySalesOrderItemQuery(): SpySalesOrderItemQuery
+    {
+        return $this->getProvidedDependency(CreditMemoDependencyProvider::QUERY_SALES_ORDER_ITEM);
     }
 
     /**

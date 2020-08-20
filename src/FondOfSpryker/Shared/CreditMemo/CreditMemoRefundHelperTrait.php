@@ -107,11 +107,11 @@ trait CreditMemoRefundHelperTrait
     }
 
     /**
-     * @param $refundItems
+     * @param array $refundItems
      *
      * @return array
      */
-    protected function resolveAndCheckItemsForRefund($refundItems): array
+    protected function resolveAndCheckItemsForRefund(array $refundItems): array
     {
         $itemsToRefund = [];
         foreach ($refundItems as $idSalesOrderItem => $salesOrderItem) {
