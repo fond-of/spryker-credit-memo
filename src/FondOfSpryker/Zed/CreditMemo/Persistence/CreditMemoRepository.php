@@ -49,8 +49,11 @@ class CreditMemoRepository extends AbstractRepository implements CreditMemoRepos
      *
      * @return \Generated\Shared\Transfer\CreditMemoCollectionTransfer|null
      */
-    public function findUnprocessedCreditMemoByStore(StoreTransfer $storeTransfer, ?int $limit = null, ?int $offset = null): ?CreditMemoCollectionTransfer
-    {
+    public function findUnprocessedCreditMemoByStore(
+        StoreTransfer $storeTransfer,
+        ?int $limit = null,
+        ?int $offset = null
+    ): ?CreditMemoCollectionTransfer {
         $filter = new CreditMemoQueryFilterTransfer();
         $filter->setStoreName($storeTransfer->getName());
 
@@ -298,17 +301,15 @@ class CreditMemoRepository extends AbstractRepository implements CreditMemoRepos
      */
     protected function handleLimitAndOffset(?int $limit, ?int $offset, CreditMemoQueryFilterTransfer $filter): void
     {
-        if ($limit !== null || $offset !== null) {
-            if ($offset !== null) {
-                $filter->setOffset($offset);
-            }
-            if ($limit !== null) {
-                $filter->setLimit($limit);
-            }
+        if ($offset !== null) {
+            $filter->setOffset($offset);
+        }
+        if ($limit !== null) {
+            $filter->setLimit($limit);
+        }
 
-            if ($limit === null && $offset !== null) {
-                $filter->setOffset(null);
-            }
+        if ($limit === null && $offset !== null) {
+            $filter->setOffset(null);
         }
     }
 }
