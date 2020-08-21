@@ -104,7 +104,8 @@ class CreditMemoBusinessFactory extends AbstractBusinessFactory
         return new CreditMemoProcessor(
             $this->getCreditMemoProcessorPlugins(),
             $this->getRepository(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getConfig()
         );
     }
 

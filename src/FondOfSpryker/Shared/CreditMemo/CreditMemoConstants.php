@@ -14,6 +14,7 @@ interface CreditMemoConstants
     public const STATE_IN_PROGRESS = 'in progress';
     public const STATE_COMPLETE = 'complete';
     public const STATE_ERROR = 'error';
+    public const PROCESS_SIZE_MAX = 'CREDIT_MEMO:PROCESS_SIZE_MAX';
     public const STATE_MAPPING = [
         self::STATE_NEW => 0,
         self::STATE_IN_PROGRESS => 1,

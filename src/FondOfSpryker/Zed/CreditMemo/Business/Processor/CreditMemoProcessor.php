@@ -4,6 +4,8 @@ namespace FondOfSpryker\Zed\CreditMemo\Business\Processor;
 
 use ArrayIterator;
 use Countable;
+use Exception;
+use FondOfSpryker\Zed\CreditMemo\CreditMemoConfig;
 use FondOfSpryker\Zed\CreditMemo\Dependency\Facade\CreditMemoToStoreFacadeInterface;
 use FondOfSpryker\Zed\CreditMemo\Exception\ProcessorNotFoundException;
 use FondOfSpryker\Zed\CreditMemo\Persistence\CreditMemoRepositoryInterface;
@@ -13,9 +15,13 @@ use Generated\Shared\Transfer\CreditMemoProcessorResponseCollectionTransfer;
 use Generated\Shared\Transfer\CreditMemoProcessorStatusTransfer;
 use Generated\Shared\Transfer\CreditMemoTransfer;
 use IteratorAggregate;
+use Spryker\Shared\Log\LoggerTrait;
+use Throwable;
 
 class CreditMemoProcessor implements Countable, IteratorAggregate, CreditMemoProcessorInterface
 {
+    use LoggerTrait;
+
     /**
      * @var \FondOfSpryker\Zed\CreditMemoExtension\Dependency\Plugin\CreditMemoProcessorPluginInterface[]
      */
@@ -32,18 +38,26 @@ class CreditMemoProcessor implements Countable, IteratorAggregate, CreditMemoPro
     protected $store;
 
     /**
+     * @var \FondOfSpryker\Zed\CreditMemo\CreditMemoConfig
+     */
+    protected $config;
+
+    /**
      * @param array $processor
      * @param \FondOfSpryker\Zed\CreditMemo\Persistence\CreditMemoRepositoryInterface $creditMemoRepository
      * @param \FondOfSpryker\Zed\CreditMemo\Dependency\Facade\CreditMemoToStoreFacadeInterface $store
+     * @param \FondOfSpryker\Zed\CreditMemo\CreditMemoConfig $config
      */
     public function __construct(
         array $processor,
         CreditMemoRepositoryInterface $creditMemoRepository,
-        CreditMemoToStoreFacadeInterface $store
+        CreditMemoToStoreFacadeInterface $store,
+        CreditMemoConfig $config
     ) {
         $this->setProcessor($processor);
         $this->creditMemoRepository = $creditMemoRepository;
         $this->store = $store;
+        $this->config = $config;
     }
 
     /**
@@ -58,11 +72,22 @@ class CreditMemoProcessor implements Countable, IteratorAggregate, CreditMemoPro
         $processor = $this->prepareProcessorPlugins($processorPluginNames);
 
         $responseCollection = new CreditMemoProcessorResponseCollectionTransfer();
+        $count = 0;
+        $errorCount = 0;
 
         foreach ($creditMemoCollection->getCreditMemos() as $creditMemoTransfer) {
-            $response = $this->startProcessing($processor, $creditMemoTransfer);
+            try {
+                $response = $this->startProcessing($processor, $creditMemoTransfer);
+            } catch (Throwable $exception) {
+                $response = $this->createErrorResponse($creditMemoTransfer, $exception);
+                $errorCount++;
+                $this->getLogger()->error($exception->getMessage(), $exception->getTrace());
+            }
+            $count++;
             $responseCollection->addStatus($response);
         }
+        $responseCollection->setCount($count);
+        $responseCollection->setErrorCount($errorCount);
 
         return $responseCollection;
     }
@@ -139,8 +164,10 @@ class CreditMemoProcessor implements Countable, IteratorAggregate, CreditMemoPro
      *
      * @return \Generated\Shared\Transfer\CreditMemoProcessorStatusTransfer
      */
-    protected function startProcessing(array $processorPlugins, CreditMemoTransfer $creditMemoTransfer): CreditMemoProcessorStatusTransfer
-    {
+    protected function startProcessing(
+        array $processorPlugins,
+        CreditMemoTransfer $creditMemoTransfer
+    ): CreditMemoProcessorStatusTransfer {
         $statusResponse = $this->createDefaultResponse($creditMemoTransfer);
 
         foreach ($processorPlugins as $processorPlugin) {
@@ -179,7 +206,7 @@ class CreditMemoProcessor implements Countable, IteratorAggregate, CreditMemoPro
     protected function resolveCreditMemos(array $ids): ?CreditMemoCollectionTransfer
     {
         if ($ids === []) {
-            return $this->creditMemoRepository->findUnprocessedCreditMemoByStore($this->store->getCurrentStore());
+            return $this->creditMemoRepository->findUnprocessedCreditMemoByStore($this->store->getCurrentStore(), $this->config->getProcessSizeMax());
         }
 
         return $this->creditMemoRepository->findUnprocessedCreditMemoByStoreAndIds(
@@ -200,8 +227,28 @@ class CreditMemoProcessor implements Countable, IteratorAggregate, CreditMemoPro
         $statusResponse = (new CreditMemoProcessorStatusTransfer())
             ->setSuccess(false)
             ->setId($creditMemoTransfer->getIdCreditMemo())
-            ->setMessage(sprintf('No credit memo processor available to process order with payment method %s and payment provider %s', $alesPaymentMethodType->getPaymentMethod(), $alesPaymentMethodType->getPaymentProvider()));
+            ->setMessage(sprintf(
+                'No credit memo processor available to process order with payment method %s and payment provider %s',
+                $alesPaymentMethodType->getPaymentMethod(),
+                $alesPaymentMethodType->getPaymentProvider()
+            ));
 
         return $statusResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CreditMemoTransfer $creditMemoTransfer
+     * @param \Exception $exception
+     *
+     * @return \Generated\Shared\Transfer\CreditMemoProcessorStatusTransfer
+     */
+    protected function createErrorResponse(
+        CreditMemoTransfer $creditMemoTransfer,
+        Exception $exception
+    ): CreditMemoProcessorStatusTransfer {
+        return (new CreditMemoProcessorStatusTransfer())
+            ->setSuccess(false)
+            ->setId($creditMemoTransfer->getIdCreditMemo())
+            ->setMessage($exception->getMessage());
     }
 }
