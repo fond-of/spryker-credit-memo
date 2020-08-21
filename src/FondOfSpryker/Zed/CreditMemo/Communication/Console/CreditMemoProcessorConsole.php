@@ -71,7 +71,7 @@ class CreditMemoProcessorConsole extends Console
         }
 
         try {
-            $this->getFacade()->processCreditMemos($resources, $ids);
+            $responseCollection = $this->getFacade()->processCreditMemos($resources, $ids);
         } catch (Exception $exception) {
             $status = static::CODE_ERROR;
             $messenger->error(sprintf(
@@ -81,6 +81,7 @@ class CreditMemoProcessorConsole extends Console
                 $exception->getMessage()
             ));
         }
+
         $messenger->info(sprintf(
             'You just executed %s!',
             static::COMMAND_NAME

@@ -30,4 +30,12 @@ class CreditMemoConfig extends AbstractBundleConfig
     {
         return $this->get(CreditMemoConstants::REFERENCE_OFFSET, null);
     }
+
+    /**
+     * @return int
+     */
+    public function getProcessSizeMax(): int
+    {
+        return $this->get(CreditMemoConstants::PROCESS_SIZE_MAX, 25);
+    }
 }

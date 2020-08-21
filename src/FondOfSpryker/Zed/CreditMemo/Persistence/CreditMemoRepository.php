@@ -44,13 +44,17 @@ class CreditMemoRepository extends AbstractRepository implements CreditMemoRepos
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param int|null $limit
+     * @param int|null $offset
      *
      * @return \Generated\Shared\Transfer\CreditMemoCollectionTransfer|null
      */
-    public function findUnprocessedCreditMemoByStore(StoreTransfer $storeTransfer): ?CreditMemoCollectionTransfer
+    public function findUnprocessedCreditMemoByStore(StoreTransfer $storeTransfer, ?int $limit = null, ?int $offset = null): ?CreditMemoCollectionTransfer
     {
         $filter = new CreditMemoQueryFilterTransfer();
         $filter->setStoreName($storeTransfer->getName());
+
+        $this->handleLimitAndOffset($limit, $offset, $filter);
 
         $fosCreditMemos = $this->prepareFindUnprocessedCreditMemoQuery($filter)->find();
 
@@ -200,6 +204,14 @@ class CreditMemoRepository extends AbstractRepository implements CreditMemoRepos
             $fosCreditMemoQuery->filterByIdCreditMemo_In($filterTransfer->getIds());
         }
 
+        if ($filterTransfer->getLimit() !== null) {
+            $fosCreditMemoQuery->limit($filterTransfer->getLimit());
+        }
+
+        if ($filterTransfer->getOffset() !== null) {
+            $fosCreditMemoQuery->offset($filterTransfer->getOffset());
+        }
+
         return $fosCreditMemoQuery;
     }
 
@@ -275,5 +287,28 @@ class CreditMemoRepository extends AbstractRepository implements CreditMemoRepos
         $this->prepareSalesPaymentMethodType($creditMemo, $creditMemoTransfer);
 
         return $creditMemoTransfer;
+    }
+
+    /**
+     * @param int|null $limit
+     * @param int|null $offset
+     * @param \Generated\Shared\Transfer\CreditMemoQueryFilterTransfer $filter
+     *
+     * @return void
+     */
+    protected function handleLimitAndOffset(?int $limit, ?int $offset, CreditMemoQueryFilterTransfer $filter): void
+    {
+        if ($limit !== null || $offset !== null) {
+            if ($offset !== null) {
+                $filter->setOffset($offset);
+            }
+            if ($limit !== null) {
+                $filter->setLimit($limit);
+            }
+
+            if ($limit === null && $offset !== null) {
+                $filter->setOffset(null);
+            }
+        }
     }
 }

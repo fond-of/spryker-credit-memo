@@ -65,6 +65,7 @@
 
     <transfer name="CreditMemoProcessorResponseCollection">
         <property name="count" type="int" />
+        <property name="errorCount" type="int" />
         <property name="status" type="CreditMemoProcessorStatus[]" />
     </transfer>
 
@@ -72,7 +73,6 @@
         <property name="id" type="int" />
         <property name="message" type="string" />
         <property name="success" type="bool" />
-        <property name="wasRefunded" type="bool" />
     </transfer>
 
     <transfer name="CreditMemoCollection">
@@ -82,6 +82,8 @@
     <transfer name="CreditMemoQueryFilter">
         <property name="storeName" type="string" />
         <property name="ids" type="array" />
+        <property name="offset" type="int" />
+        <property name="limit" type="int" />
     </transfer>
 
     <transfer name="CreditMemoState">

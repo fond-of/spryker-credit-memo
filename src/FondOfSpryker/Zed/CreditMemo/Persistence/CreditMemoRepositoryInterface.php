@@ -22,10 +22,12 @@ interface CreditMemoRepositoryInterface
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param int|null $limit
+     * @param int|null $offset
      *
      * @return \Generated\Shared\Transfer\CreditMemoCollectionTransfer|null
      */
-    public function findUnprocessedCreditMemoByStore(StoreTransfer $storeTransfer): ?CreditMemoCollectionTransfer;
+    public function findUnprocessedCreditMemoByStore(StoreTransfer $storeTransfer, ?int $limit = null, ?int $offset = null): ?CreditMemoCollectionTransfer;
 
     /**
      * @param int $idCreditMemo
